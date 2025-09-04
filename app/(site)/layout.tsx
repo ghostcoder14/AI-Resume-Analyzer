@@ -9,9 +9,9 @@ export default function HomeLayout({
 }) {
   return (
     <>
-    <Navbar/>
+    
       {children}
-      <FooterUi/>
+     
     </>
   );
 }

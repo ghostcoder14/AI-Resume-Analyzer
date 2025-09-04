@@ -3,17 +3,21 @@ import Image from "next/image";
 import { GridBackgroundDemo } from "../components/ui/grid-background";
 import { Brain, FileText, MessageSquare, Zap } from "lucide-react";
 import { FileUpload } from "../components/ui/file-upload";
+import FooterUi from "../components/FooterUI";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
-    <GridBackgroundDemo>
-      <div className="text-center flex flex-col items-center justify-center gap-4 px-4">
+  <div className="scroll-auto">
+    <Navbar/>
+      <GridBackgroundDemo >
+      <div className="text-center flex flex-col items-center justify-center gap-3 px-1">
         <Zap className="w-8 h-8 text-primary mb-2 animate-pulse" />
         <span className="text-base font-medium text-white/90 flex flex-row gap-2">
         <Zap/>  AI-Powered Resume Analyzer
         </span>
 
-        <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 leading-tight">
+        <h2 className="text-4xl md:text-4xl font-extrabold lg:text-5xl  text-foreground mb-4 leading-tight">
           Optimize Your Resume for{" "}
           <span className="block text-gradient">Maximum Impact</span>
         </h2>
@@ -38,9 +42,9 @@ export default function Home() {
 
           <div className="text-center">
             <div className="w-16 h-16 bg-shine rounded-full flex items-center justify-center mx-auto mb-4 shimmer">
-             <div className="flex items-center justify-center rounded-full bg-white h-12 w-12">
-                <Brain className="h-6 w-6 text-black" />
-             </div>
+             <div className="flex items-center justify-center rounded-full bg-gray-900 h-8 w-8 md:h-12 md:w-12">
+                <Brain className="h-4 w-4 md:h-6 md:w-6 text-white" />
+              </div>
             </div>
             <h3 className="text-lg font-semibold mb-2">AI Analysis</h3>
             <p className="text-sm text-muted-foreground">
@@ -62,10 +66,11 @@ export default function Home() {
         </div>
         <div className="h-1/2 w-1/3 flex flex-col items-center">
   <FileUpload />
-</div>
-        
+</div>   
       </div>
     </GridBackgroundDemo>
+    <FooterUi/>
+  </div>
   );
 }
 
