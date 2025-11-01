@@ -1,101 +1,90 @@
-"use client";
+// SignInForm.js
+
 import { useState } from "react";
 
-export default function SignInDialog() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+// The component accepts props to toggle states managed in the parent (SignInDialog)
+export default function SignInForm({ setIsSignUp, setIsOpen }) {
+  // Local state to manage form input data
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSignIn = async () => {
+    console.log("Signing In with:", formData);
+    // ⚠️ TODO: Implement the fetch/Axios call to your backend /api/login endpoint
+    try {
+      // Example implementation:
+      /*
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Close the dialog on successful sign-in
+        setIsOpen(false); 
+      } else {
+        // Handle login failure
+        alert('Login failed!');
+      }
+      */
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+    // For demonstration, just close the dialog after logging the data
+    // setIsOpen(false); 
+  };
 
   return (
     <>
-      <div
-        onClick={() => setIsOpen(true)}
-        className="bg-white text-black px-4 py-2 transition-all duration-500 ease-in-out rounded-lg border border-gray-300 hover:border-black cursor-pointer"
+      <h2 className="text-xl text-black font-semibold mb-4">Sign In</h2>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={formData.email}
+        onChange={handleChange}
+        className="w-full border p-2 mb-3 rounded"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleChange}
+        className="w-full border p-2 mb-3 rounded"
+      />
+
+      {/* Attach submission handler to button or a wrapping <form> element */}
+      <button
+        onClick={handleSignIn}
+        className="w-full px-3 py-2 bg-black text-white rounded"
       >
-        Sign in
+        Login
+      </button>
+
+      <div className="flex justify-center mt-3">
+        <p className="text-sm text-gray-600">
+          Don’t have an account?{" "}
+          <span
+            // Use the prop function to toggle to the Sign Up form
+            onClick={() => setIsSignUp(true)}
+            className="text-blue-700 cursor-pointer"
+          >
+            Register
+          </span>
+        </p>
       </div>
-
-      
-      {isOpen && (
-        <div className="fixed inset-0 text-black flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative z-10">
-          
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-black"
-            >
-              ✖
-            </button>
-
-           
-            {isSignUp ? (
-              <>
-                <h2 className="text-xl text-black font-semibold mb-4">Sign Up</h2>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full border p-2 mb-3 rounded"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full border p-2 mb-3 rounded"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="w-full border p-2 mb-3 rounded"
-                />
-
-                <button className="w-full px-3 py-2 bg-black text-white rounded">
-                  Register
-                </button>
-
-                <div className="flex justify-center mt-3">
-                  <p className="text-sm text-gray-600">
-                    Already have an account?{" "}
-                    <span
-                      onClick={() => setIsSignUp(false)}
-                      className="text-blue-700 cursor-pointer"
-                    >
-                      Sign In
-                    </span>
-                  </p>
-                </div>
-              </>
-            ) : (
-              <>
-                <h2 className="text-xl text-black font-semibold mb-4">Sign In</h2>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full border p-2 mb-3 rounded"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="w-full border p-2 mb-3 rounded"
-                />
-
-                <button className="w-full px-3 py-2 bg-black text-white rounded">
-                  Login
-                </button>
-
-                <div className="flex justify-center mt-3">
-                  <p className="text-sm text-gray-600">
-                    Don’t have an account?{" "}
-                    <span
-                      onClick={() => setIsSignUp(true)}
-                      className="text-blue-700 cursor-pointer"
-                    >
-                      Register
-                    </span>
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 }
