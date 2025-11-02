@@ -1,7 +1,7 @@
 // app/components/Navbar.tsx
 import Link from "next/link";
 import { Brain, MessageSquare } from "lucide-react";
-import SignInDialog from "./SigninForm";
+import SignInDialog from "./SignDialog";
 
 export default function Navbar() {
   return (

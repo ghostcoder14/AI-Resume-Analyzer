@@ -1,19 +1,26 @@
-// SignInDialog.js
+// SignInDialog.tsx
 
 "use client";
 import { useState } from "react";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+
+import SignInForm from "./SignInDialog";
+import SignUpForm from "./SignUpDialog";
+
+
+type SetBooleanState = (value: boolean) => void;
 
 export default function SignInDialog() {
-  const [isOpen, setIsOpen] = useState(false);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  
   // State to switch between Sign In (false) and Sign Up (true)
-  const [isSignUp, setIsSignUp] = useState(false); 
+  const [isSignUp, setIsSignUp] = useState<boolean>(false); 
 
   return (
     <>
       {/* 1. Trigger Button */}
       <div
+        // Event handler implicitly knows the type from React/DOM
         onClick={() => setIsOpen(true)}
         className="bg-white text-black px-4 py-2 transition-all duration-500 ease-in-out rounded-lg border border-gray-300 hover:border-black cursor-pointer"
       >
@@ -33,11 +40,10 @@ export default function SignInDialog() {
               ✖
             </button>
 
-            {/* Conditional Rendering of Forms */}
             {isSignUp ? (
-              <SignUpForm setIsSignUp={setIsSignUp} setIsOpen={setIsOpen} />
+              <SignUpForm setIsSignUp={setIsSignUp as SetBooleanState} setIsOpen={setIsOpen as SetBooleanState} />
             ) : (
-              <SignInForm setIsSignUp={setIsSignUp} setIsOpen={setIsOpen} />
+              <SignInForm setIsSignUp={setIsSignUp as SetBooleanState} setIsOpen={setIsOpen as SetBooleanState} />
             )}
           </div>
         </div>
