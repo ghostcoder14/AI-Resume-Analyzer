@@ -1,6 +1,7 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -20,6 +21,7 @@ export default function SignInForm({ setIsSignUp, setIsOpen }: SignInFormProps) 
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
   
@@ -34,15 +36,18 @@ export default function SignInForm({ setIsSignUp, setIsOpen }: SignInFormProps) 
   
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault();
-
     setErrorMessage(null);
     setIsLoading(true);
 
     try {     
-      const response = await axios.post(`${BASE_URL}/api/login`, formData); 
+      const response = await axios.post(`${BASE_URL}/api/login`, formData,{
+        withCredentials: true,
+      })
       console.log("Login successful!", response.data);
+
       setIsOpen(false); 
       setFormData({ email: '', password: '' }); 
+      router.push("/dashboard")
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;

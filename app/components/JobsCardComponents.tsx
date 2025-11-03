@@ -40,7 +40,6 @@ const JobsCardComponents: React.FC<JobsCardProps> = ({ job , onDelete, onEdit })
           </div>
          )}
 
-      {/* Header with title and date */}
       <div className='flex justify-between items-start mb-3 gap-2'>
         
         <h2 className='text-lg font-bold text-gray-900 flex-1 line-clamp-2'>
@@ -51,7 +50,6 @@ const JobsCardComponents: React.FC<JobsCardProps> = ({ job , onDelete, onEdit })
         </span>
       </div>
 
-      {/* Company and location */}
       <div className="space-y-1 mb-3">
         <p className="text-base font-semibold text-gray-800">{job.company}</p>
         <p className="text-sm text-gray-600 flex items-center">

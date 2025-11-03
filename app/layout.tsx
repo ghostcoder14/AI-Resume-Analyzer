@@ -1,5 +1,3 @@
-import Navbar from "./components/Navbar"
-import FooterUi from "./components/FooterUI"
 import "./globals.css"
 import { Metadata } from "next"
 

@@ -1,8 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import JobsCardComponents from "../components/JobsCardComponents";
 import { SideDash } from "./SideDash";
 import NavBarDashBoard from "./NavBarDashBoard";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
 
 export interface Job {
   id: number;
@@ -21,6 +24,44 @@ export default function Dashboard() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isSideDashOpen, setIsSideDashOpen] = useState(false);
   const [editingJob , setEditingJob] = useState<Job | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if(!token){
+          router.push("/")
+          return 
+        }
+
+        const res = await axios.get('/api/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUsername(res.data.name || null);
+      } catch (err : any) {
+        console.error("Profile fetch failed:", err.response?.data || err.message);
+        router.push("/login");
+      }finally{
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, [router])
+
+
+  if(loading){
+    return (
+       <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        Loading your dashboard...
+      </div>
+    )
+  }
 
   const addJob = (job: Omit<Job, "id">) => {
     setJobs((prev) => [...prev, { ...job, id: prev.length + 1 }]);
@@ -41,7 +82,7 @@ export default function Dashboard() {
   return (
     <div className="relative min-h-screen bg-gray-200">
       
-      <NavBarDashBoard onOpenSideDash={() => setIsSideDashOpen(true)} />
+      <NavBarDashBoard onOpenSideDash={() => setIsSideDashOpen(true)} username={username} />
 
       <main 
         className={`pt-28 px-6 transition-all duration-300 ${
