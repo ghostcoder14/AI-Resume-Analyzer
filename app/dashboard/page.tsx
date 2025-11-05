@@ -27,6 +27,7 @@ export default function Dashboard() {
   const [username, setUsername] = useState<string | null>(null)
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [user, setUser] = useState<{ username: string; email: string } | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -53,6 +54,7 @@ export default function Dashboard() {
     };
     fetchProfile();
   }, [router])
+
 
 
   if(loading){
